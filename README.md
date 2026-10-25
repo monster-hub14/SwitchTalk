@@ -3,6 +3,8 @@
 Nextcloud Talk messaging and foreground voice calls for Nintendo Switch homebrew,
 with in-game message notifications and quick replies through Ultrahand.
 
+<a href="https://www.buymeacoffee.com/monsterreview"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me a Coffee" width="200"></a>
+
 **Version 1.0.0** is the frozen golden release, built from versions tested by the
 project owner on a Switch. Names and version labels were unified for distribution.
 

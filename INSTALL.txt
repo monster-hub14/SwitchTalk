@@ -1,13 +1,9 @@
-SwitchTalk 1.0.0 - Golden Release
+SwitchTalk 1.0.1
+Author: Monster Review
 
-This archive freezes the app and overlay/worker behavior confirmed working on
-your Switch: full app Release 17 and Quick Reply Release 2. Only release labels,
-visible names, HTTP user-agent version text and application metadata changed.
-All three visible components now show 1.0.0:
-  SwitchTalk - full application
-  SwitchTalk Overlay - Ultrahand conversations and keyboard replies
-  SwitchTalk Worker - background message worker controller
-The resident service executable is included with the worker controller.
+This patch updates author credits and version labels. Messaging, calls,
+notifications and quick replies retain the working 1.0.0 behavior.
+The original 1.0.0 golden release is preserved separately.
 
 REQUIREMENTS
 Atmosphere homebrew on an original Switch, OLED or Lite; not Switch 2.
@@ -60,10 +56,6 @@ without renewal. Messages suppressed while viewing are not replayed afterward.
 Foreground calls and the mic test stay in the full application. Background
 voice during gameplay is not part of this release.
 
-GOLDEN RELEASE RECORD
-Build, host tests, binary structure and AMS 1.10+ runtime checks passed.
-Source comparison confirms only the listed text/metadata changes from the
-user-confirmed working versions. The rebuilt 1.0.0 binaries have not separately
-been tested on hardware. SHA256.txt identifies every shipped payload file.
-The external SHA256 file also identifies the install, source and debug ZIPs.
-This archive is frozen: future changes must use a new release version.
+VALIDATION
+Author metadata, executable structure and host checks passed. The exact
+1.0.1 rebuild has not separately been tested on a Switch.

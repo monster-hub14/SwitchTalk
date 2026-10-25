@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "functional_source_changes": false,
+  "components": [
+    {
+      "file": "SwitchTalk.nro",
+      "author": "Monster Review",
+      "version": "1.0.1"
+    },
+    {
+      "file": "SwitchTalk.ovl",
+      "author": "Monster Review",
+      "version": "1.0.1"
+    },
+    {
+      "file": "SwitchTalkAlertsTest.nro",
+      "author": "Monster Review",
+      "version": "1.0.1"
+    }
+  ]
+}

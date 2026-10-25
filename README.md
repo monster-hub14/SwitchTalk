@@ -1,12 +1,14 @@
 # SwitchTalk
 
+**Author: Monster Review**
+
 Nextcloud Talk messaging and foreground voice calls for Nintendo Switch homebrew,
 with in-game message notifications and quick replies through Ultrahand.
 
 <a href="https://www.buymeacoffee.com/monsterreview"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me a Coffee" width="200"></a>
 
-**Version 1.0.0** is the frozen golden release, built from versions tested by the
-project owner on a Switch. Names and version labels were unified for distribution.
+**Version 1.0.1** updates the application and component author credits to Monster Review.
+The frozen 1.0.0 golden release remains available.
 
 ## Features
 
@@ -32,7 +34,7 @@ Background voice during gameplay is not included.
 
 ## Download and install
 
-Download **SwitchTalk-1.0.0-Golden.zip** from [Releases](https://github.com/monster-hub14/SwitchTalk/releases/latest).
+Download **SwitchTalk-1.0.1.zip** from [Releases](https://github.com/monster-hub14/SwitchTalk/releases/latest).
 The ZIP contains the compiled application, overlay, resident worker and its controller.
 Power off the Switch, extract the `switch` and `atmosphere` folders to the SD root,
 merge folders, replace existing SwitchTalk files, and reboot.
@@ -45,7 +47,7 @@ merge folders, replace existing SwitchTalk files, and reboot.
 | Resident worker | `atmosphere/contents/4200000000535755/exefs.nsp` |
 
 The worker controller keeps its existing disk path for upgrades. Its displayed name
-is **SwitchTalk Worker**, version **1.0.0**. Existing saved login is retained.
+is **SwitchTalk Worker**, version **1.0.1**. Existing saved login is retained.
 No account data or boot-startup flag is shipped.
 
 1. Open SwitchTalk, sign in and confirm your conversations load.

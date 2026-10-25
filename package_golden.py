@@ -1,6 +1,7 @@
 from pathlib import Path
 import shutil,zipfile,hashlib,json,sys,datetime
 base=Path(__file__).resolve().parent
+if (base/'VERSION').read_text().strip()!='1.0.0':raise SystemExit('Historical golden packager: use package_release.py for the current release.')
 out=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else base/'dist';out.mkdir(parents=True,exist_ok=True)
 name='SwitchTalk-1.0.0-Golden';install=out/(name+'.zip');source=out/(name+'-Source.zip');debug=out/(name+'-Debug.zip')
 for p in [install,source,debug,out/(name+'-SHA256.txt'),out/(name+'-Manifest.json')]:
@@ -25,7 +26,7 @@ with zipfile.ZipFile(install,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
 with zipfile.ZipFile(source,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
  for p in base.rglob('*'):
   rel=p.relative_to(base)
-  if not p.is_file() or rel.parts[0] in ['release','dist'] or '__pycache__' in rel.parts or '.git' in rel.parts:continue
+  if not p.is_file() or rel.parts[0] in ['release','dist'] or '__pycache__' in rel.parts:continue
   if len(rel.parts)>1 and rel.parts[0] in ['app','overlay-worker'] and rel.parts[1]=='build':continue
   if p.suffix in ['.pyc','.o','.elf','.map','.nro','.ovl'] or p.name in ['account.bin','account.bin.tmp']:continue
   z.write(p,'SwitchTalk-1.0.0/'+rel.as_posix())

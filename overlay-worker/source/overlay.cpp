@@ -138,7 +138,7 @@ public:
  }
 };
 class QuickGui: public tsl::Gui {
-public:tsl::elm::Element *createUI() override{auto *f=new tsl::elm::OverlayFrame("SwitchTalk","Overlay / 1.0.0");f->setContent(new Canvas);return f;}
+public:tsl::elm::Element *createUI() override{auto *f=new tsl::elm::OverlayFrame("SwitchTalk","Monster Review / 1.0.1");f->setContent(new Canvas);return f;}
  // libultrahand routes B directly to Gui before the focused Canvas.
  // Consume only B here; other keys are already handled by Canvas.
  bool handleInput(u64 down,u64,const HidTouchState&,HidAnalogStickState,HidAnalogStickState) override{

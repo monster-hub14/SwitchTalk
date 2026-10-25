@@ -40,7 +40,7 @@ static void run(void *arg){
  while(!atomic_load(&alert_stop)){
   if(atomic_exchange(&alert_test,false)){bool ok=notify_write("test",(long)(svcGetSystemTick()/19200000),"Background notification test - SwitchTalk worker is running");if(ok){mutexLock(&lock);++info.alerts;++info.test_alerts;mutexUnlock(&lock);}status(ok?2:3,ok?"Test alert queued; check Ultrahand display":"Could not queue test alert (SD error or 8 pending alerts)");}
   if(access("sdmc:/switch/SwitchTalk/account.bin",F_OK) && access("sdmc:/switch/SwitchTalk/account.bin.tmp",F_OK)){
-   erase(&client,sizeof(client));memset(&policy,0,sizeof(policy));notify_clear();have_account=false;qr_reset("Sign in using SwitchTalk first");status(3,"No saved login. Sign in using SwitchTalk 1.0.0 first.");wait_seconds(8);continue;
+   erase(&client,sizeof(client));memset(&policy,0,sizeof(policy));notify_clear();have_account=false;qr_reset("Sign in using SwitchTalk first");status(3,"No saved login. Sign in using SwitchTalk 1.0.1 first.");wait_seconds(8);continue;
   }
   /* Reopen the encrypted record so sign-out or account changes take effect. */
   static TalkClient loaded;erase(&loaded,sizeof(loaded));

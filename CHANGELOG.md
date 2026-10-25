@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+Credit Monster Review as author in the full app, overlay, worker controller,
+NACP metadata, build configuration and repository README. Messaging, calls,
+notifications and keyboard behavior are unchanged. Preserve the 1.0.0 golden release.
+
 ## 1.0.0
 
 Initial public golden release. Unifies the tested full application, background

@@ -141,9 +141,9 @@ void gui_test_buffer(uint32_t *buffer,unsigned stride_pixels){pixels=buffer;stri
 #endif
 static void header(void){
  rect(0,0,1280,64,BLUE);bubble_icon(24,18,WHITE);text(72,14,"SwitchTalk",2,WHITE,250);
- text(263,24,"Talk on your Switch",0,RGB(211,237,251),400);
+ text(263,24,"By Monster Review",0,RGB(211,237,251),400);
  if(own_user[0])photo_avatar(1005,32,18,own_user,RGB(63,164,218),avatars_user_key(own_user));
- text(1038,24,"Version 1.0.0",0,WHITE,222);
+ text(1038,24,"Version 1.0.1",0,WHITE,222);
 }
 static void footer(const char *hint){rect(0,682,1280,38,WHITE);rect(0,682,1280,1,LINE);text(22,690,hint,0,MUTED,1236);}
 static void status_bar(const char *status,const char *error,bool busy){

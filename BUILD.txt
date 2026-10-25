@@ -1,4 +1,4 @@
-SwitchTalk 1.0.0 source build
+SwitchTalk 1.0.1 source build
 
 Use devkitA64 r28 / GCC 15.1.0 and libnx 4.12.0, plus Switch portlibs
 curl, zlib, opus, minizip, mbedTLS. The vendored RTC source and its existing
@@ -13,7 +13,7 @@ Windows native compiler build (run from the extracted source root):
  python overlay-worker/build_overlay.py <SDK>
  python validate_app.py
  python overlay-worker/verify.py <SDK> <TinyCC-directory>
- python package_golden.py <output-directory>
+ python package_release.py <output-directory>
 
 TinyCC is used by the portable npdmtool and host tests; it is not the Switch
 application compiler. All shipped executables are compiled by devkitA64.

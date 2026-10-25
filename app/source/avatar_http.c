@@ -32,7 +32,7 @@ bool avatar_download(const TalkClient *account,const AvatarKey *key,unsigned cha
  curl_easy_setopt(curl,CURLOPT_CONNECTTIMEOUT,2L);curl_easy_setopt(curl,CURLOPT_TIMEOUT,4L);curl_easy_setopt(curl,CURLOPT_NOSIGNAL,1L);
  curl_easy_setopt(curl,CURLOPT_WRITEFUNCTION,receive);curl_easy_setopt(curl,CURLOPT_WRITEDATA,&download);
  curl_easy_setopt(curl,CURLOPT_NOPROGRESS,0L);curl_easy_setopt(curl,CURLOPT_XFERINFOFUNCTION,progress);curl_easy_setopt(curl,CURLOPT_XFERINFODATA,&download);
- curl_easy_setopt(curl,CURLOPT_USERAGENT,"SwitchTalk/1.0.0 (libnx)");
+ curl_easy_setopt(curl,CURLOPT_USERAGENT,"SwitchTalk/1.0.1 (libnx)");
  CURLcode result=curl_easy_perform(curl);long code=0;curl_easy_getinfo(curl,CURLINFO_RESPONSE_CODE,&code);
  ok=result==CURLE_OK && code>=200 && code<300 && download.used;
  if(ok){*data=download.data;*size=download.used;download.data=NULL;}

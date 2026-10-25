@@ -31,10 +31,13 @@ assert magic==b'ASET' and ver==0 and nasz==0x4000 and rsz==0
 assert nro[size+io:size+io+isz]==(root/'icon.jpg').read_bytes()
 nacp=nro[size+na:size+na+nasz]
 assert nacp[:len(b'SwitchTalk Worker\0')]==b'SwitchTalk Worker\0'
-assert nacp[0x3060:0x3066]==b'1.0.0\0'
+assert nacp[0x3060:0x3066]==b'1.0.1\0'
 assert size+na+nasz==len(nro)
 icon=Image.open(root/'icon.jpg')
 assert icon.size==(256,256) and icon.format=='JPEG'
-report={'status':'PASS','size_bytes':len(nro),'sha256':hashlib.sha256(nro).hexdigest(),'segments':segments,'bss_size':bss,'build_id':nro[64:96].hex(),'icon':'256x256 JPEG','title':'SwitchTalk Worker','version':'1.0.0','checks':['AArch64 ELF linked','NRO0 and ASET headers','all executable segments match linked ELF except required NRO header','segment alignment, bounds, padding and BSS','embedded JPEG and NACP metadata'],'device_tested':False}
+for language in range(12):
+ assert nacp[language*0x300+0x200:language*0x300+0x200+15]==b'Monster Review\0'
+report={'status':'PASS','author':'Monster Review','size_bytes':len(nro),'sha256':hashlib.sha256(nro).hexdigest(),'segments':segments,'bss_size':bss,'build_id':nro[64:96].hex(),'icon':'256x256 JPEG','title':'SwitchTalk Worker','version':'1.0.1','checks':['AArch64 ELF linked','NRO0 and ASET headers','all executable segments match linked ELF except required NRO header','segment alignment, bounds, padding and BSS','embedded JPEG and NACP metadata'],'device_tested':False}
 (root/'build/validation-controller.json').write_text(json.dumps(report,indent=2))
 print(json.dumps(report,indent=2))
+

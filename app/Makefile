@@ -20,8 +20,8 @@ LDFLAGS = -specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,--wrap=sslConnec
 LIBS := -lrtc-switch -lopus -lcurl -lz -lnx -lm
 LIBDIRS := $(PORTLIBS) $(LIBNX)
 export APP_TITLE := SwitchTalk
-export APP_AUTHOR := SwitchTalk Community Prototype
-export APP_VERSION := 1.0.0
+export APP_AUTHOR := Monster Review
+export APP_VERSION := 1.0.1
 ICON := icon.jpg
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 export OUTPUT := $(CURDIR)/$(TARGET)

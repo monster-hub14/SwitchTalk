@@ -1,0 +1,21 @@
+{
+  "app": {
+    "status": "PASS",
+    "comparison": "Exact source match after whitelisted display/version/user-agent text replacements",
+    "changed_files": [
+      "avatar_http.c",
+      "gui.c",
+      "talk.c"
+    ]
+  },
+  "overlay-worker": {
+    "status": "PASS",
+    "comparison": "Exact source match after whitelisted display/version/user-agent text replacements",
+    "changed_files": [
+      "alert_worker.c",
+      "controller.c",
+      "overlay.cpp",
+      "talk.c"
+    ]
+  }
+}

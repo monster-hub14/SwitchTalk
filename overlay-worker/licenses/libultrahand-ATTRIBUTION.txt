@@ -1,0 +1,6 @@
+libultrahand by ppkantorski; libtesla originally by WerWolv.
+https://github.com/ppkantorski/libultrahand
+Pinned commit: 856ddbddd796fc4a59ad2e0bf939c5963e6f9dd2
+This is the library revision bundled with Ultrahand Overlay v2.5.3.
+Original source notices are preserved in the accompanying source archive.
+Quick Reply overlay and modified worker sources are provided under GPL-2.0-or-later.

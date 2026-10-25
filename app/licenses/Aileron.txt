@@ -1,0 +1,5 @@
+Aileron Regular by Sora Sagano (dot colon).
+https://dotcolon.net/fonts/aileron
+
+CC0 / No Rights Reserved. The font embedded in Pillow identifies its copyright as "No Rights Reserved."
+This application includes rasterized glyphs from Pillow ImageFont.load_default, not a system or Nintendo font.

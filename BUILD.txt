@@ -1,0 +1,21 @@
+SwitchTalk 1.0.0 source build
+
+Use devkitA64 r28 / GCC 15.1.0 and libnx 4.12.0, plus Switch portlibs
+curl, zlib, opus, minizip, mbedTLS. The vendored RTC source and its existing
+Switch archive are included under app/vendor/rtc. Its build recipe is there.
+The exact libultrahand source used by Ultrahand 2.5.3 is vendored under
+overlay-worker/vendor/libultrahand, commit 856ddbddd796fc4a59ad2e0bf939c5963e6f9dd2.
+No edits to the library or replacement compatibility markers were used.
+
+Windows native compiler build (run from the extracted source root):
+ powershell -File app/build-windows.ps1 -DevkitPro <SDK> -Python <Python> -OutputDirectory app/build
+ python overlay-worker/build.py <SDK> <TinyCC-directory>
+ python overlay-worker/build_overlay.py <SDK>
+ python validate_app.py
+ python overlay-worker/verify.py <SDK> <TinyCC-directory>
+ python package_golden.py <output-directory>
+
+TinyCC is used by the portable npdmtool and host tests; it is not the Switch
+application compiler. All shipped executables are compiled by devkitA64.
+The packager refuses to overwrite existing golden ZIP names. A functional
+change requires a new version; do not replace the published golden artifacts.

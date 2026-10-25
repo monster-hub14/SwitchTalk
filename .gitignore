@@ -1,0 +1,20 @@
+# Build and local runtime output
+/app/build/
+/overlay-worker/build/
+/dist/
+/release/
+__pycache__/
+*.pyc
+*.o
+*.elf
+*.map
+*.nro
+*.ovl
+*.nsp
+# Local account/credential state
+account.bin
+account.bin.tmp
+baseline.bin
+.env
+.env.*
+# Keep the vendored RTC library required by the existing native build.

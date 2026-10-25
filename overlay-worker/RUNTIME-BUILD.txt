@@ -1,0 +1,5 @@
+Built against official switchbrew/libnx v4.12.0 source.
+https://github.com/switchbrew/libnx/tree/v4.12.0
+Native build recipe: build_libnx_native.py (run from workspace root).
+The installed libnx library, headers and linker script were all updated.
+No compatibility bypass or forged LNY2 marker is used.

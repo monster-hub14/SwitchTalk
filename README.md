@@ -10,6 +10,10 @@ with in-game message notifications and quick replies through Ultrahand.
 **Version 1.0.1** updates the application and component author credits to Monster Review.
 The frozen 1.0.0 golden release remains available.
 
+## Before you start
+
+SwitchTalk is a client for an existing Nextcloud Talk service, not a standalone communication app. Before you can use it, you need access to a working Nextcloud server with Nextcloud Talk already installed and configured, and an account on that server. You can use your own server or one provided by someone else. SwitchTalk does not host a server or create a communication service for you; without a working Nextcloud and Nextcloud Talk setup, it will not work.
+
 ## Features
 
 - Direct and group messaging, saved sign-in, avatars, and rich-message names.
@@ -27,7 +31,8 @@ Background voice during gameplay is not included.
   Switch 2 is not supported.
 - Ultrahand 2.5.3 for notifications and the overlay. Atmosphere, Ultrahand, and sys-tune
   are separate projects and are not bundled.
-- A Nextcloud Talk account on a reachable HTTPS server with a trusted certificate.
+- Access to an existing Nextcloud server with **Nextcloud Talk already installed and configured**,
+  an account on that server, and a reachable HTTPS address with a trusted certificate.
   Set the Switch date and time correctly for certificate verification.
 - A supported microphone for calls: 3.5 mm headset or compatible USB input.
   Bluetooth microphone input is not supported.

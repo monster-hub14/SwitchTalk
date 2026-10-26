@@ -1,4 +1,8 @@
 SwitchTalk 1.0.1
+
+BEFORE YOU START
+SwitchTalk is a client for an existing Nextcloud Talk service, not a standalone communication app. Before you can use it, you need access to a working Nextcloud server with Nextcloud Talk already installed and configured, and an account on that server. You can use your own server or one provided by someone else. SwitchTalk does not host a server or create a communication service for you; without a working Nextcloud and Nextcloud Talk setup, it will not work.
+
 Author: Monster Review
 
 This patch updates author credits and version labels. Messaging, calls,

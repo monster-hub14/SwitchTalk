@@ -33,3 +33,11 @@ Saved sign-in and update preferences are never included or overwritten by this Z
 
 Existing overlay controls and foreground calls are unchanged. See README.md and
 UPDATES.md. This exact updater/relaunch still needs a physical Switch test.
+
+WHICH NRO SHOULD I OPEN?
+Always open SwitchTalk.nro from Homebrew Menu. It is the stable launcher.
+app-a.nro is the real application; keep it beside the launcher. A future update
+creates app-b.nro as the alternate slot. The launcher selects the verified slot
+for you and retains the other version for recovery. Keep all supplied .txt files.
+Do not delete/rename these files, move them apart, or replace the launcher with
+app-a.nro, app-b.nro or the separate SwitchTalkApp.nro updater asset.

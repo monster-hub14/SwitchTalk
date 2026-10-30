@@ -14,6 +14,25 @@ The frozen 1.0.0 golden release remains available.
 
 SwitchTalk is a client for an existing Nextcloud Talk service, not a standalone communication app. Before you can use it, you need access to a working Nextcloud server with Nextcloud Talk already installed and configured, and an account on that server. You can use your own server or one provided by someone else. SwitchTalk does not host a server or create a communication service for you; without a working Nextcloud and Nextcloud Talk setup, it will not work.
 
+## Why are there two NRO files?
+
+**Always open SwitchTalk from Homebrew Menu using `SwitchTalk.nro`. Keep both files.**
+
+| File | Purpose | What you should do |
+| --- | --- | --- |
+| `SwitchTalk.nro` | Stable launcher: verifies and starts the selected application version. | Launch this normally. |
+| `app-a.nro` | Actual SwitchTalk application in update slot A. | Keep it in the same folder; the launcher opens it automatically. |
+| `app-b.nro` | Alternate application slot, created by a future update. | Keep it when it appears; it holds the other verified version for updating/recovery. |
+
+Install the entire `switch/SwitchTalk/` folder. Do not delete `app-a.nro`, rename
+these files, move them apart, or replace `SwitchTalk.nro` with an application-slot
+file or the separate `SwitchTalkApp.nro` release asset.
+
+Updates download into the slot that is not running, then the launcher switches
+to the verified version. The previous verified slot remains available for recovery.
+You do not need to choose between A and B or open the slot files yourself during
+normal use. The supplied `.txt` files are also part of the updater; keep them.
+
 ## Automatic updates are optional - ON by default
 
 Install the **complete 1.1.0 ZIP once** to upgrade from 1.0.x. Copy both `switch`

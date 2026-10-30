@@ -46,5 +46,8 @@ int main(void){
  gui_call(&state,0,true);assert(gui_hit_test(500,550,NULL)==GUI_NONE);
  MicState mic={.device_count=1,.capturing=true,.rate=48000,.channels=1,.level=62,.peak=78,.blocks=1254};strcpy(mic.active,"Headset microphone (3.5 mm)");strcpy(mic.status,"Microphone input is active. Speak to see the meter move.");gui_mic(&mic);assert(gui_hit_test(950,130,NULL)==GUI_BACK);assert(gui_hit_test(500,540,NULL)==GUI_MIC_TOGGLE);snapshot("preview-microphone");
  assert(gui_hit_test(-1,0,NULL)==GUI_NONE);assert(gui_hit_test(1280,720,NULL)==GUI_NONE);
+ GuiUpdateModel updates={.automatic=true,.phase=3,.countdown=5};strcpy(updates.message,"Update verified - ready to restart");strcpy(updates.version,"1.1.1");gui_updates(&updates);assert(gui_hit_test(300,490,NULL)==GUI_UPDATE_CHECK);assert(gui_hit_test(800,490,NULL)==GUI_UPDATE_AUTO);assert(gui_hit_test(300,560,NULL)==GUI_UPDATE_RESTORE);assert(gui_hit_test(800,560,NULL)==GUI_BACK);snapshot("preview-updates-on");
+ updates.automatic=false;updates.busy=true;updates.phase=2;updates.total=4096;updates.downloaded=2048;gui_updates(&updates);assert(gui_hit_test(300,490,NULL)==GUI_NONE);assert(gui_hit_test(800,490,NULL)==GUI_UPDATE_AUTO);assert(gui_hit_test(300,560,NULL)==GUI_NONE);snapshot("preview-updates-off");
+ m.view=1;m.busy=false;gui_app(&m);assert(gui_hit_test(800,30,NULL)==GUI_UPDATES);m.view=2;gui_app(&m);assert(gui_hit_test(800,30,NULL)==GUI_NONE);
  avatars_shutdown();gui_exit();return 0;
 }

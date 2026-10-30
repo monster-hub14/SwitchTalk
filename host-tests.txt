@@ -1,0 +1,116 @@
+{
+  "status": "PASS",
+  "author": "Monster Review",
+  "size_bytes": 4365892,
+  "sha256": "75654411951c16cbf5b7be6a43f1e94564ecbe446957ca6f4aa8ab42ce011e0c",
+  "segments": [
+    {
+      "offset": 0,
+      "size": 1212416
+    },
+    {
+      "offset": 1212416,
+      "size": 1454080
+    },
+    {
+      "offset": 2666496,
+      "size": 45056
+    }
+  ],
+  "bss_size": 4530176,
+  "build_id": "486db9c9a0a1b9b506d31de0f3217b0af5953cce000000000000000000000000",
+  "icon": "256x256 JPEG",
+  "title": "SwitchTalk",
+  "version": "1.1.0",
+  "checks": [
+    "AArch64 ELF linked",
+    "NRO0 and ASET headers",
+    "all executable segments match linked ELF except required NRO header",
+    "segment alignment, bounds, padding and BSS",
+    "embedded JPEG and NACP metadata"
+  ],
+  "device_tested": false,
+  "romfs": {
+    "bundle/SwitchTalk.ovl": {
+      "size": 483658,
+      "sha256": "b8521ab51c6de7ba3d10ed007041375886056ed08538929189ac324f55945239"
+    },
+    "bundle/SwitchTalkWorker.nro": {
+      "size": 237894,
+      "sha256": "082de9ad7d8a61b7aa02094760445b9414f8ebd37d1b716d908bc84bd2dfcf9c"
+    },
+    "bundle/exefs.nsp": {
+      "size": 702480,
+      "sha256": "a344fa4706a3191191668764cbdd9c9adf7854c2c2d4b14c580f6563532a4a31"
+    },
+    "bundle/files.txt": {
+      "size": 296,
+      "sha256": "50289407f8906ecf76d824b5f7734e89dc54d5ea4b97dc16dde43f0b91b9f1b3"
+    },
+    "update/cacert.pem": {
+      "size": 200116,
+      "sha256": "796f1389bfea13c0ed78f663b765baaff54a508e5483786bd6ece73c5e3e3cbe"
+    }
+  }
+}
+
+{
+  "status": "PASS",
+  "author": "Monster Review",
+  "size_bytes": 266566,
+  "sha256": "9bdd01f02b70c9c343a934835128460f0e2d45590c9b510da54a2d8d488fbb00",
+  "segments": [
+    {
+      "offset": 0,
+      "size": 176128
+    },
+    {
+      "offset": 176128,
+      "size": 40960
+    },
+    {
+      "offset": 217088,
+      "size": 20480
+    }
+  ],
+  "bss_size": 16384,
+  "build_id": "10919ef0cd0876411d1a57b9c859cdc3ddc652d4000000000000000000000000",
+  "icon": "256x256 JPEG",
+  "title": "SwitchTalk",
+  "version": "1.1.0",
+  "checks": [
+    "AArch64 ELF linked",
+    "NRO0 and ASET headers",
+    "all executable segments match linked ELF except required NRO header",
+    "segment alignment, bounds, padding and BSS",
+    "embedded JPEG and NACP metadata"
+  ],
+  "device_tested": false
+}
+
+All controller, policy, filesystem, API, NSO/NPDM and NRO checks: PASS
+AMS 1.10+ runtime extension verified in worker, controller and overlay: PASS
+
+Rich messages: call participants, generic parameters, repeated/exact keys, plain text, actor fallback, missing/null metadata, nonrecursive replacement and UTF-8/buffer bounds: PASS
+Avatars: actual PNG/JPEG decode, malformed/oversized bounds, identity/version cache, cancellation, account isolation, failed-image backoff and eviction: PASS
+Avatar HTTP: Nextcloud subpath, encoded IDs/versions, basic auth, strict HTTPS, no redirects, bounded body, cancellation and nonfatal errors: PASS
+Call HTTP: session bootstrap, cookie-only room/call, GET/body reset, mute/hangup, null success, 404 detail and session mismatch: PASS
+Call protocol: SFU audio mid, rejected video sections and exact SDP JSON round trip: PASS
+Mic capture: USB/3.5mm selection, actual format, nonzero/silent buffers, timeout, failures and cleanup: PASS
+PCM silence, full scale, low signal, stereo and quiet 440 Hz tone: PASS
+JSON parser tests: PASSED
+Message ordering, deduplication, updates and rolling history: PASS
+API test: history
+API test: send
+API test: poll
+Call controls: controller/touch mute, hangup, exit, repeated calls, worker start failure and cleanup before network resume: PASS
+Native GUI renderer: guarded framebuffer, login password hiding, touch hit testing, pagination, busy controls, long/empty/error messages, call and microphone screens: PASS
+All native C test suites passed.
+API 201 send, forward cursor, concurrent reply, 304 idle, dedup and API error retention: PASS
+Worker login, live receive, interrupted polling for send, dedup, call pause/resume and sign-out: PASS
+
+PASS: three SHA-256 known vectors; bounded manifest/version parser; title/version/NRO/hash validation; dual-slot staging; incomplete/corrupt update recovery; failed-boot rollback; real HTTP worker state machine with TLS/HTTPS options, loss/oversize/404/cancellation/disk-full; no downgrade; idle-only auto restart and defer; saved preferences; previous-version restore
+PASS: matched bundled companions, strict names/version/size/hash, all files verified before worker stop, stop failure keeps originals, no rewrite when current, interrupted-install repair
+
+
+PASS: actual release executable passes client manifest, SHA-256, NRO bounds, application title and version verification

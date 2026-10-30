@@ -17,3 +17,8 @@ Original notices are preserved in the vendored source and component license fold
 
 Build dependencies are listed in BUILD.txt. Nintendo SDK material, Atmosphere,
 Ultrahand binaries, user credentials and server configuration are not included.
+
+The updater adapts Monster Review's Switchacade/System Breach verified-slot system.
+The native RomFS builder and original switch-tools C sources are in app/tools;
+see app/COPYING.switch-tools. The public CA bundle and original notice are retained
+under app/romfs/update and app/licenses. Third-party authors/notices are unchanged.

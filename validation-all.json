@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "version": "1.1.0",
+  "device_tested": false,
+  "payload_sha256": "75654411951c16cbf5b7be6a43f1e94564ecbe446957ca6f4aa8ab42ce011e0c",
+  "build_inputs_sha256": "4c33273bac020ee2534637bf2f313b268fc2d4ecfd44f0133e8fcaef264aeb9a",
+  "checks": [
+    "existing chat/call/avatar/mic/network GUI host suites",
+    "new Updates renderer and touch controls",
+    "in-flight user send blocks activation even after leaving chat",
+    "updater hash/version/title/size/TLS/failure/preferences/idle/rollback suites",
+    "matched companion verification and interrupted-install repair",
+    "actual client verifier accepts compiled app/update descriptor",
+    "app/launcher/RomFS/worker/controller/overlay native structure",
+    "build input hash matches source"
+  ],
+  "automatic_default": true,
+  "settings_persistent": true
+}

@@ -143,7 +143,7 @@ static void header(void){
  rect(0,0,1280,64,BLUE);bubble_icon(24,18,WHITE);text(72,14,"SwitchTalk",2,WHITE,250);
  text(263,24,"By Monster Review",0,RGB(211,237,251),400);
  if(own_user[0])photo_avatar(1005,32,18,own_user,RGB(63,164,218),avatars_user_key(own_user));
- text(1038,24,"Version 1.0.1",0,WHITE,222);
+ text(1038,24,"Version 1.1.0",0,WHITE,222);
 }
 static void footer(const char *hint){rect(0,682,1280,38,WHITE);rect(0,682,1280,1,LINE);text(22,690,hint,0,MUTED,1236);}
 static void status_bar(const char *status,const char *error,bool busy){
@@ -238,7 +238,7 @@ static void chat(const GuiModel *m){
 void gui_app(const GuiModel *m){
  if(!ready)return;
  snprintf(own_user,sizeof(own_user),"%s",m->view>0?(m->client->account_id[0]?m->client->account_id:m->client->username):"");
- begin(BG);header();
+ begin(BG);header();button(760,14,210,36,"ZL  Updates",GUI_UPDATES,m->view!=2 && !m->busy,PALE,BLUE);
  if(m->view==0)login(m);
  else {
   sidebar(m);
@@ -317,4 +317,19 @@ GuiAction gui_touch(const GuiModel *m,int *selected){
 #else
  (void)selected;return GUI_NONE;
 #endif
+}
+
+void gui_updates(const GuiUpdateModel *m){
+ if(!ready)return;begin(BG);header();rect(0,64,1280,618,BG);round_rect(120,88,1040,552,18,WHITE);
+ text(158,116,"SwitchTalk Updates",2,INK,960);
+ text(158,171,m->automatic?"AUTOMATIC UPDATES: ON":"AUTOMATIC UPDATES: OFF",1,BLUE,960);
+ text(158,212,"Optional GitHub updates. X changes this saved setting.",0,MUTED,960);
+ wrapped(m->message,158,255,950,3,true,m->phase==5?RED:INK);
+ if(m->total){char progress[120];snprintf(progress,sizeof(progress),"%llu / %llu KB",(unsigned long long)(m->downloaded/1024),(unsigned long long)(m->total/1024));text(158,350,progress,0,MUTED,900);rect(158,382,950,12,PALE);rect(158,382,(int)(m->downloaded*950/m->total),12,BLUE);}
+ if(m->countdown>=0){char line[120];snprintf(line,sizeof(line),"Restart in %d seconds. B postpones this session.",m->countdown);text(158,423,line,0,BLUE,950);}
+ button(158,473,440,48,m->phase==3?"A  Install and restart":"A  Check for updates",GUI_UPDATE_CHECK,!m->busy,BLUE,WHITE);
+ button(620,473,488,48,"X  Automatic updates On / Off",GUI_UPDATE_AUTO,true,PALE,BLUE);
+ button(158,540,440,48,"Y  Restore previous version",GUI_UPDATE_RESTORE,!m->busy,PALE,BLUE);
+ button(620,540,488,48,"B  Back / Later",GUI_BACK,true,PALE,BLUE);
+ footer("A Check / Install     X Auto On/Off     Y Restore previous     B Back / Later     + Exit");end();
 }

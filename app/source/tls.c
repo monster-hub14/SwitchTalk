@@ -5,8 +5,8 @@
 #include "tls.h"
 #include "tls_roots.h"
 
-static Result last_handshake, last_verify, root_x1, root_x2;
-static bool custom_ca;
+static _Thread_local Result last_handshake, last_verify, root_x1, root_x2;
+static _Thread_local bool custom_ca;
 static CURLcode import_roots(CURL *curl, void *sslctx, void *userdata) {
     (void)curl; (void)userdata;
     SslContext *ctx=(SslContext*)sslctx;

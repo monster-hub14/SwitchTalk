@@ -1,10 +1,10 @@
 """Minimal icon/NACP NRO packager, following switchbrew/switch-tools elf2nro.c.
-No RomFS support. The application itself is compiled with devkitA64, not Python.
+Includes a read-only RomFS built by switch-tools. The application itself is compiled with devkitA64, not Python.
 """
 from pathlib import Path
 import struct, sys
 
-def package(elf_path, icon_path, output):
+def package(elf_path, icon_path, output, romfs_path=None):
     elf=Path(elf_path).read_bytes()
     assert elf[:6] == b'\x7fELF\x02\x01'
     assert struct.unpack_from('<H',elf,18)[0] == 183
@@ -38,13 +38,16 @@ def package(elf_path, icon_path, output):
         title=b'SwitchTalk'; author=b'Monster Review'
         nacp[i*0x300:i*0x300+len(title)]=title
         nacp[i*0x300+0x200:i*0x300+0x200+len(author)]=author
-    nacp[0x3060:0x3065]=b'1.0.1'
+    nacp[0x3060:0x3060+len(b'1.1.0')]=b'1.1.0'
     for off,val in [(0x3024,0x100),(0x302c,0xbff),(0x3034,0x10000),(0x3080,0x3e00000),(0x3088,0x180000),(0x30f0,0x102)]:
         struct.pack_into('<I',nacp,off,val)
     nacp[0x3040:0x3060]=bytes([12,255,255,10,255,12,12,12,12,12,13,13]+[255]*20)
     icon=Path(icon_path).read_bytes()
-    out+=struct.pack('<4sIQQQQQQ',b'ASET',0,56,len(icon),56+len(icon),len(nacp),0,0)
+    romfs=Path(romfs_path).read_bytes() if romfs_path else b''
+    ro=(56+len(icon)+len(nacp)+15)&~15 if romfs else 0
+    out+=struct.pack('<4sIQQQQQQ',b'ASET',0,56,len(icon),56+len(icon),len(nacp),ro,len(romfs))
     out+=icon+nacp
+    if romfs:out+=bytes(ro-56-len(icon)-len(nacp))+romfs
     Path(output).write_bytes(out)
     print(f'Packaged {output}: {len(out)} bytes')
 

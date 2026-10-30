@@ -18,3 +18,8 @@ baseline.bin
 .env
 .env.*
 # Keep the vendored RTC library required by the existing native build.
+
+# Generated matched updater companions
+/app/romfs/bundle/
+
+/work/

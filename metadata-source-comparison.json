@@ -1,6 +1,18 @@
 {
-  "version": "1.0.1",
-  "change": "Author Monster Review and version/name text only",
-  "functional_changes": false,
-  "baseline": "1.0.0 golden"
+  "version": "1.1.0",
+  "baseline": "1.0.1",
+  "functional_changes": true,
+  "changes": [
+    "optional default-on verified-slot updater",
+    "ZL/touch Updates controls with persisted opt-out",
+    "safe companion synchronization on payload start",
+    "thread-local TLS diagnostics for concurrent HTTPS transfers",
+    "observe in-flight user HTTP requests before update activation"
+  ],
+  "unchanged": [
+    "chat API and message parsing",
+    "foreground call protocol and mic capture",
+    "overlay reply input and sending",
+    "resident notification policy and visible-room suppression"
+  ]
 }

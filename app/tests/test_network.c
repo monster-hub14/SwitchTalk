@@ -13,7 +13,7 @@ void avatars_step(const TalkClient *t,AvatarCancel cancel,void *ctx){
  InterlockedExchange(&image_pending,0);
 }
 static bool (*cancel_fn)(void*);static void *cancel_arg;
-static volatile LONG polls,sends,arriving,cancelled_polls,fail_next;
+static volatile LONG polls,sends,arriving,cancelled_polls,fail_next,hold_send,held_send_started;
 void talk_set_cancel(bool (*f)(void*),void *p){cancel_fn=f;cancel_arg=p;}
 void talk_init(TalkClient *t){memset(t,0,sizeof(*t));}
 void talk_clear_password(TalkClient *t){memset(t->app_password,0,sizeof(t->app_password));}
@@ -35,6 +35,7 @@ bool talk_poll(TalkClient *t,const char *token){
 }
 bool talk_send(TalkClient *t,const char *token,const char *message){
     assert(!strcmp(message,"hello"));InterlockedIncrement(&sends);
+    if(hold_send){InterlockedExchange(&held_send_started,1);while(hold_send){assert(!network_idle_for_update());Sleep(1);}}
     TalkMessage m={.id=3};talk_merge_message(t,&m);return true;
 }
 static TalkClient ui;
@@ -74,6 +75,10 @@ int main(void){
     network_signout();Sleep(250);
     NetAction a;bool ok;char n[240];assert(!network_take(&ui,&a,&ok,n,sizeof(n)));
     assert(network_submit(NET_LOGIN,&ui,NULL,NULL));assert(await_action(NET_LOGIN));
+    InterlockedExchange(&hold_send,1);assert(network_submit(NET_SEND,&ui,"room1","hello"));assert(!network_idle_for_update());
+    for(int i=0;i<5000 && !held_send_started;i++)Sleep(1);assert(held_send_started);
+    network_watch(NULL);assert(!network_idle_for_update());InterlockedExchange(&hold_send,0);
+    for(int i=0;i<5000 && !network_idle_for_update();i++)Sleep(1);assert(network_idle_for_update());
     network_stop();assert(!strcmp(ui.username,"user"));
     puts("Worker login, live receive, interrupted polling for send, dedup, call pause/resume and sign-out: PASS");return 0;
 }

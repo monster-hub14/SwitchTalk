@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "device_tested": false,
+  "suites": [
+    {
+      "suite": "updater",
+      "status": "PASS",
+      "output": "PASS: three SHA-256 known vectors; bounded manifest/version parser; title/version/NRO/hash validation; dual-slot staging; incomplete/corrupt update recovery; failed-boot rollback; real HTTP worker state machine with TLS/HTTPS options, loss/oversize/404/cancellation/disk-full; no downgrade; idle-only auto restart and defer; saved preferences; previous-version restore"
+    },
+    {
+      "suite": "update_bundle",
+      "status": "PASS",
+      "output": "PASS: matched bundled companions, strict names/version/size/hash, all files verified before worker stop, stop failure keeps originals, no rewrite when current, interrupted-install repair"
+    }
+  ]
+}

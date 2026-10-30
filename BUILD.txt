@@ -1,21 +1,21 @@
-SwitchTalk 1.0.1 source build
+SwitchTalk 1.1.0 source build
+Use devkitA64 r28/GCC 15.1.0, libnx 4.12.0, and Switch portlibs curl, zlib,
+opus, minizip and mbedTLS. The existing RTC archive and source are under app/vendor/rtc.
+The libultrahand revision bundled with Ultrahand 2.5.3 is vendored unchanged.
 
-Use devkitA64 r28 / GCC 15.1.0 and libnx 4.12.0, plus Switch portlibs
-curl, zlib, opus, minizip, mbedTLS. The vendored RTC source and its existing
-Switch archive are included under app/vendor/rtc. Its build recipe is there.
-The exact libultrahand source used by Ultrahand 2.5.3 is vendored under
-overlay-worker/vendor/libultrahand, commit 856ddbddd796fc4a59ad2e0bf939c5963e6f9dd2.
-No edits to the library or replacement compatibility markers were used.
-
-Windows native compiler build (run from the extracted source root):
- powershell -File app/build-windows.ps1 -DevkitPro <SDK> -Python <Python> -OutputDirectory app/build
- python overlay-worker/build.py <SDK> <TinyCC-directory>
- python overlay-worker/build_overlay.py <SDK>
+Windows Python + PowerShell:
+ python tools/build-release.py <SDK> <TinyCC-directory>
  python validate_app.py
+ python validate-launcher.py
  python overlay-worker/verify.py <SDK> <TinyCC-directory>
- python package_release.py <output-directory>
+ python tools/verify-release.py <SDK> <TinyCC-directory> <native-clang++>
+ python tools/prepare-release.py <output-directory>
 
-TinyCC is used by the portable npdmtool and host tests; it is not the Switch
-application compiler. All shipped executables are compiled by devkitA64.
-The packager refuses to overwrite existing golden ZIP names. A functional
-change requires a new version; do not replace the published golden artifacts.
+The build first produces matching worker/overlay/controller files, embeds them and
+hashes plus a public CA bundle in RomFS, then builds the app and stable launcher.
+The native Windows build_romfs helper and its C sources are under app/tools.
+No GitHub credentials belong in clients, source, RomFS or release archives.
+App C++ uses GNU++26 for the installed SDK headers; native tests use C++17.
+TinyCC is for host C tests/npdmtool, never the Switch compiler. The Makefile only
+builds the app payload and expects generated companions first. Use the script above
+for a complete installer. Old golden packaging tools are historical.

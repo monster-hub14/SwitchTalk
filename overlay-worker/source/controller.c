@@ -35,8 +35,8 @@ static void save_baseline(void){
  if(!ok)snprintf(note,sizeof(note),"Worker started, but baseline write failed.");
 }
 static __attribute__((noinline)) void draw(void){
- printf("\x1b[2J\x1b[H=== SwitchTalk Worker 1.0.1 - Monster Review ===\n\n");
- printf("SwitchTalk 1.0.1 notification and quick-reply worker control.\n");
+ printf("\x1b[2J\x1b[H=== SwitchTalk Worker 1.1.0 - Monster Review ===\n\n");
+ printf("SwitchTalk 1.1.0 notification and quick-reply worker control.\n");
  printf("Uses your encrypted saved account; no voice or auto-start.\n\n");
  printf("Worker: %s\n",available?"RUNNING":"NOT CONNECTED");
  if(available){

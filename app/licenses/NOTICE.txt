@@ -1,0 +1,4 @@
+Switchacade 1.6.0 links curl, mbedTLS and zlib. Their licenses are included here.
+The embedded certificate bundle is Mozilla's CA collection, obtained from
+https://curl.se/ca/cacert.pem on 2026-10-29. Mozilla certificate data is covered
+by MPL 2.0; the license is included. No certificate checks are disabled.

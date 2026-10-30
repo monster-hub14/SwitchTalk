@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+
+Add optional default-on GitHub updates, a ZL/touch Updates panel, persistent X
+On/Off, manual checking/installing, older verified slot restore, stable launcher
+recovery and matched overlay/worker synchronization. Installation waits outside
+chats/calls and active operations. B postpones. Existing login is retained.
+
 ## 1.0.1
 
 Credit Monster Review as author in the full app, overlay, worker controller,

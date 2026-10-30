@@ -15,7 +15,7 @@ static Mutex guard;
 static atomic_bool stopping,interrupt_poll,paused,parked;
 static Job queued;
 static TalkClient remote,published;
-static bool pending,busy,ready,result_ok,signed_in,wipe;
+static bool pending,busy,ready,result_ok,signed_in,wipe,executing_user;
 static NetAction result_action;
 static char watched[128],result_notice[240];
 static unsigned generation;
@@ -39,7 +39,7 @@ static void run(void *ctx){
         mutexLock(&guard);
         if(wipe){erase(&remote,sizeof(remote));avatars_clear();signed_in=false;wipe=false;failures=0;retry_at=0;}
         gen=generation;
-        if(!ready && pending){job=queued;erase(&queued,sizeof(queued));pending=false;have=true;polling=false;}
+        if(!ready && pending){job=queued;erase(&queued,sizeof(queued));pending=false;have=true;polling=false;executing_user=true;}
         else if(!ready && signed_in && time(NULL)>=retry_at){
             if(watched[0] && avatar_turn && avatars_pending()){image_job=have=true;avatar_turn=false;}
             else if(watched[0]){job.action=NET_POLL;snprintf(job.token,sizeof(job.token),"%s",watched);have=true;}
@@ -68,6 +68,7 @@ static void run(void *ctx){
             case NET_POLL:talk_set_poll_wait(avatars_pending()?1:8);ok=talk_poll(&remote,job.token);avatar_turn=true;break;
         }
         mutexLock(&guard);
+        executing_user=false;
         bool stale=gen!=generation || (polling && atomic_load(&interrupt_poll));
         if(!stale){
             if(job.action==NET_LOGIN)signed_in=ok;
@@ -146,3 +147,5 @@ void network_pause(bool pause){
     atomic_store(&paused,pause);
     if(pause){atomic_store(&interrupt_poll,true);while(!atomic_load(&parked))svcSleepThread(10000000);}
 }
+
+bool network_idle_for_update(void){mutexLock(&guard);bool idle=!executing_user && !pending && !busy;mutexUnlock(&guard);return idle;}

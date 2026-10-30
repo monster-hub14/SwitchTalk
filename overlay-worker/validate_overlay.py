@@ -13,9 +13,9 @@ for i,row in enumerate(loads):
  off,va,fs,ms=row[2],row[3],row[5],row[6];no,ns=struct.unpack_from('<II',nro,32+8*i);assert no==va and ns%4096==0 and ns>=fs and no+ns<=size
  start=128 if i==0 else 0;assert nro[no+start:no+fs]==elf[off+start:off+fs]
 magic,version,io,isz,na,nasz,ro,rsz=struct.unpack_from('<4sIQQQQQQ',nro,size);assert magic==b'ASET' and version==0 and nasz==0x4000 and rsz==0
-assert nro[size+io:size+io+isz]==(r/'icon.jpg').read_bytes();nacp=nro[size+na:size+na+nasz];assert nacp[:len(b'SwitchTalk Overlay\0')]==b'SwitchTalk Overlay\0' and nacp[0x3060:0x3066]==b'1.0.1\0';assert size+na+nasz==len(nro)
+assert nro[size+io:size+io+isz]==(r/'icon.jpg').read_bytes();nacp=nro[size+na:size+na+nasz];assert nacp[:len(b'SwitchTalk Overlay\0')]==b'SwitchTalk Overlay\0' and nacp[0x3060:0x3066]==b'1.1.0\0';assert size+na+nasz==len(nro)
 for language in range(12):
  assert nacp[language*0x300+0x200:language*0x300+0x200+15]==b'Monster Review\0'
-report={'status':'PASS','author':'Monster Review','artifact':'SwitchTalk.ovl','version':'1.0.1','bytes':len(full),'sha256':hashlib.sha256(full).hexdigest(),'static_loaded_image_bytes':max(x[3]+x[6] for x in loads),'ultrahand_library_commit':'856ddbddd796fc4a59ad2e0bf939c5963e6f9dd2','libnx_version':'4.12.0','ams_110_runtime_check':'PASS','signature':'ULTR','read_only':False,'device_tested':False,'checks':['Actual AArch64 ELF segments match NRO','NRO and ASET/icon/NACP sizes and bounds','Ultrahand signature after asset sections','Exact pinned library revision bundled with Ultrahand 2.5.3']}
+report={'status':'PASS','author':'Monster Review','artifact':'SwitchTalk.ovl','version':'1.1.0','bytes':len(full),'sha256':hashlib.sha256(full).hexdigest(),'static_loaded_image_bytes':max(x[3]+x[6] for x in loads),'ultrahand_library_commit':'856ddbddd796fc4a59ad2e0bf939c5963e6f9dd2','libnx_version':'4.12.0','ams_110_runtime_check':'PASS','signature':'ULTR','read_only':False,'device_tested':False,'checks':['Actual AArch64 ELF segments match NRO','NRO and ASET/icon/NACP sizes and bounds','Ultrahand signature after asset sections','Exact pinned library revision bundled with Ultrahand 2.5.3']}
 (b/'validation-overlay.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))
 

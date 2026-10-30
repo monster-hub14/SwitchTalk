@@ -86,7 +86,7 @@ static int request(TalkClient *t,const char *path,const char *post,bool idle_ok)
     curl_easy_setopt(curl,CURLOPT_NOPROGRESS,0L);
     curl_easy_setopt(curl,CURLOPT_XFERINFOFUNCTION,progress);
     curl_easy_setopt(curl,CURLOPT_NOSIGNAL,1L);
-    curl_easy_setopt(curl,CURLOPT_USERAGENT,"SwitchTalk/1.0.1 (libnx)");
+    curl_easy_setopt(curl,CURLOPT_USERAGENT,"SwitchTalk/1.1.0 (libnx)");
     if(post){curl_easy_setopt(curl,CURLOPT_POSTFIELDS,post);curl_easy_setopt(curl,CURLOPT_POSTFIELDSIZE,(long)strlen(post));}
     CURLcode result=curl_easy_perform(curl);long status=0;
     curl_easy_getinfo(curl,CURLINFO_RESPONSE_CODE,&status);last_http_status=status;

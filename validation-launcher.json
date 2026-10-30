@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "author": "Monster Review",
+  "size_bytes": 266566,
+  "sha256": "9bdd01f02b70c9c343a934835128460f0e2d45590c9b510da54a2d8d488fbb00",
+  "segments": [
+    {
+      "offset": 0,
+      "size": 176128
+    },
+    {
+      "offset": 176128,
+      "size": 40960
+    },
+    {
+      "offset": 217088,
+      "size": 20480
+    }
+  ],
+  "bss_size": 16384,
+  "build_id": "10919ef0cd0876411d1a57b9c859cdc3ddc652d4000000000000000000000000",
+  "icon": "256x256 JPEG",
+  "title": "SwitchTalk",
+  "version": "1.1.0",
+  "checks": [
+    "AArch64 ELF linked",
+    "NRO0 and ASET headers",
+    "all executable segments match linked ELF except required NRO header",
+    "segment alignment, bounds, padding and BSS",
+    "embedded JPEG and NACP metadata"
+  ],
+  "device_tested": false
+}

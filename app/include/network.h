@@ -5,6 +5,7 @@
 typedef enum { NET_LOGIN,NET_ROOMS,NET_HISTORY,NET_SEND,NET_POLL,NET_AUTO_ROOMS } NetAction;
 Result network_start(void);
 void network_stop(void);
+bool network_idle_for_update(void);
 void network_pause(bool paused);
 bool network_submit(NetAction action,const TalkClient *client,const char *token,const char *message);
 bool network_take(TalkClient *client,NetAction *action,bool *ok,char *notice,size_t cap);

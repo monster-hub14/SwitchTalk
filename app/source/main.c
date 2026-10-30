@@ -13,6 +13,7 @@
 #include "saved_login.h"
 #include "avatars.h"
 #include "visibility.h"
+#include "updater.h"
 
 #define ROOMS_PER_PAGE GUI_ROOMS_PER_PAGE
 #define MESSAGES_PER_PAGE 1
@@ -28,11 +29,27 @@ static char statusline[240]="Enter your Nextcloud Talk connection details";
 static void status(const char *s){snprintf(statusline,sizeof(statusline),"%s",s);}
 static void render(void) {
     visibility_set(view==VIEW_CHAT && current_room>=0 && current_room<client.room_count?client.rooms[current_room].token:NULL);
+    char update_line[240]={0};bool update_notice=view!=VIEW_CHAT && st_update_notice(update_line,sizeof(update_line));
     GuiModel model={.client=&client,.view=view,.room_sel=room_sel,.room_page=room_page,
-        .message_scroll=message_scroll,.current_room=current_room,.busy=command_busy,.status=statusline};
+        .message_scroll=message_scroll,.current_room=current_room,.busy=command_busy,.status=update_notice?update_line:statusline};
     gui_app(&model);
 }
 static bool microphone_test(void){visibility_set(NULL);return audio_test_run();}
+static bool updates_panel(void){
+ PadState pad;padInitializeDefault(&pad);
+ while(appletMainLoop()){
+  padUpdate(&pad);u64 down=padGetButtonsDown(&pad);GuiAction action=gui_touch(NULL,NULL);
+  if(action==GUI_UPDATE_CHECK)down|=HidNpadButton_A;
+  if(action==GUI_UPDATE_AUTO)down|=HidNpadButton_X;
+  if(action==GUI_UPDATE_RESTORE)down|=HidNpadButton_Y;
+  if(action==GUI_BACK)down|=HidNpadButton_B;
+  if(down&HidNpadButton_Plus)return true;
+  st_update_input(down);
+  if(down&HidNpadButton_B)return false;
+  if(st_update_tick(network_idle_for_update()))return true;
+  GuiUpdateModel model;st_update_model(&model);gui_updates(&model);svcSleepThread(33000000);
+ }return true;
+}
 static bool keyboard(char *out,size_t cap,bool password) {
     SwkbdConfig cfg;
     Result rc=swkbdCreate(&cfg,0);
@@ -154,6 +171,13 @@ int main(int argc,char **argv) {
         while(appletMainLoop()){padUpdate(&p);if(padGetButtonsDown(&p)&HidNpadButton_Plus)break;consoleUpdate(NULL);svcSleepThread(33000000);}
         consoleExit(NULL);return 1;
     }
+    gui_notice("Starting SwitchTalk","Checking installed components...");
+    if(!st_update_prepare(argc>0 && argv && argv[0]?argv[0]:"")){
+        gui_notice("Update recovery",st_update_error());
+        PadState recovery;padConfigureInput(1,HidNpadStyleSet_NpadStandard);padInitializeDefault(&recovery);
+        while(appletMainLoop()){padUpdate(&recovery);if(padGetButtonsDown(&recovery)&HidNpadButton_Plus)break;svcSleepThread(33000000);}
+        st_update_shutdown();gui_exit();return 1;
+    }
     hidInitializeTouchScreen();
     padConfigureInput(1,HidNpadStyleSet_NpadStandard);
     PadState pad;padInitializeDefault(&pad);
@@ -168,21 +192,22 @@ int main(int argc,char **argv) {
             if(padGetButtonsDown(&pad)&HidNpadButton_Plus)break;
             svcSleepThread(100000000);
         }
-        gui_exit();return 1;
+        st_update_shutdown();gui_exit();return 1;
     }
     if(curl_global_init(CURL_GLOBAL_DEFAULT)!=CURLE_OK){
-        socketExit();gui_exit();return 1;
+        socketExit();st_update_shutdown();gui_exit();return 1;
     }
     Result net=network_start();
     if(R_FAILED(net)){
         gui_notice("Connection error","Unable to start network worker. Press + to exit.");
         while(appletMainLoop()){padUpdate(&pad);if(padGetButtonsDown(&pad)&HidNpadButton_Plus)break;svcSleepThread(33000000);}
-        curl_global_cleanup();socketExit();gui_exit();return 1;
+        curl_global_cleanup();socketExit();st_update_shutdown();gui_exit();return 1;
     }
     if(reconnect && network_submit(NET_LOGIN,&client,NULL,NULL)){command_busy=true;status("Signing in with saved account...");}
     visibility_init();
     unsigned image_revision=avatars_revision();
-    render();
+    render();st_update_boot_ok();
+    char last_update_line[240]={0};
     while(appletMainLoop()) {
         visibility_tick();
         bool updated=receive_update();unsigned current_revision=avatars_revision();
@@ -191,6 +216,17 @@ int main(int argc,char **argv) {
         u64 down=padGetButtonsDown(&pad);
         GuiModel touch_model={.client=&client,.view=view,.room_sel=room_sel,.room_page=room_page,.message_scroll=message_scroll,.current_room=current_room,.busy=command_busy,.status=statusline};
         int selected=-1;GuiAction action=gui_touch(&touch_model,&selected);
+        if(action==GUI_UPDATES || (down&HidNpadButton_ZL)){
+            if(view==VIEW_CHAT || command_busy)status("Return to Conversations and wait, then press ZL for Updates.");
+            else if(updates_panel())break;
+            render();continue;
+        }
+        bool update_idle=view!=VIEW_CHAT && !command_busy && !client.error[0] && network_idle_for_update();
+        GuiUpdateModel update_state;st_update_model(&update_state);
+        if(update_idle && update_state.phase==3 && update_state.countdown>=0 && (down&HidNpadButton_B)){st_update_input(HidNpadButton_B);down&=~HidNpadButton_B;}
+        if(st_update_tick(update_idle && !down && action==GUI_NONE))break;
+        char update_line[240]={0};st_update_notice(update_line,sizeof(update_line));
+        if(view!=VIEW_CHAT && strcmp(last_update_line,update_line)){snprintf(last_update_line,sizeof(last_update_line),"%s",update_line);render();}
         if(action==GUI_MESSAGE){if(read_message(selected))break;render();continue;}
         if(action==GUI_SELECT_ROOM && !command_busy){room_sel=selected;view=VIEW_ROOMS;room_page=room_sel/ROOMS_PER_PAGE;open_selected_room();render();continue;}
         if(action>=GUI_EDIT_SERVER && action<=GUI_EDIT_PASSWORD && !command_busy){
@@ -249,6 +285,7 @@ int main(int argc,char **argv) {
     }
     visibility_exit();
     status("Closing network connections...");render();
+    st_update_shutdown();
     network_stop();
     talk_clear_password(&client);
     curl_global_cleanup();socketExit();gui_exit();
